@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profile_img');
-            $table->enum('role',['admin','head','employee']);
+            $table->string('profile_img')->nullable();
+            $table->enum('role',['admin','head','employee'])->default('employee');
             $table->boolean('verified')->default(0);
             $table->timestamps();
         });

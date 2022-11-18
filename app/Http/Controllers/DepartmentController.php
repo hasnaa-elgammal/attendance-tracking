@@ -3,51 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        if(Auth::user()->isAdmin()){
+            $departments = Department::all();
+            //return view
+        }else{
+            //redirect to home
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        if(Auth::user()->isAdmin()){
+            //return view
+        }else{
+            //redirect to home
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
-        //
+        if(Auth::user()->isAdmin()){
+            $department = Department::create($request->all());
+            //redirect to deparments
+        }else{
+            //redirect to home
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Department  $department
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Department $department)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -57,7 +48,11 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        if(Auth::user()->isAdmin()){
+            //return view
+        }else{
+            //redirect to home
+        }
     }
 
     /**
@@ -67,9 +62,16 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(DepartmentRequest $request, Department $department)
     {
-        //
+        if(Auth::user()->isAdmin()){
+            $department->update($request->all());
+            //redirect to departments
+        }
+        else{
+            //redirect to home
+        }
+
     }
 
     /**
@@ -80,6 +82,14 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        if(Auth::user()->isAdmin()){
+            $department->delete();
+            //redirect to departments
+        }
+        else{
+            //redirect to home
+        }
+
+
     }
 }
