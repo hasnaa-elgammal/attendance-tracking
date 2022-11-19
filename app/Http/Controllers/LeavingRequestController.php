@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LeavingRequest;
 use Illuminate\Http\Request;
+use App\Models\LeavingRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\LeavingRequestRequest;
 
 class LeavingRequestController extends Controller
 {
@@ -24,7 +26,7 @@ class LeavingRequestController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -33,9 +35,13 @@ class LeavingRequestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LeavingRequestRequest $request)
     {
-        //
+        LeavingRequest::create([
+            'employee_id'=> Auth::user()->id,
+            'reason'=> $request->reason,
+            'leaving_time' => date("Y-m-d H:i:s", strtotime($request->leaving_time))
+        ]);
     }
 
     /**

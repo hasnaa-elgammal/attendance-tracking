@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CheckInOut;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckInOutController extends Controller
 {
@@ -35,7 +36,12 @@ class CheckInOutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        CheckInOut::create([
+            'employee_id'=>Auth::user()->id,
+            'date'=> date("Y-m-d"),
+            'time'=>date("H:i:s")
+        ]);
+        //redirect
     }
 
     /**
@@ -67,9 +73,16 @@ class CheckInOutController extends Controller
      * @param  \App\Models\CheckInOut  $checkInOut
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CheckInOut $checkInOut)
+    public function update(Request $request)
     {
-        //
+        $checkIn = CheckInOut::where('employee_id', Auth::user()->id)
+        ->where('date', date("Y-m-d"))->firstOrFails();
+
+        if($checkIn){
+            $checkIn->check_out = date("H:i:s");
+            $checkIn->save();
+        }
+        //redirect
     }
 
     /**

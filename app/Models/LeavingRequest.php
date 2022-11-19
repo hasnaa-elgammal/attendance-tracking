@@ -13,6 +13,7 @@ class LeavingRequest extends Model
         'employee_id',
         'reason',
         'status',
+        'leaving_time'
     ];
     public $timestamps = true;
 
