@@ -18,4 +18,7 @@ class Department extends Model
     public function head(){
         return $this->hasOne(Employee::class, 'head_id', 'id');
     }
+    public function employees(){
+        return $this->hasMany(Employee::class);
+    }
 }

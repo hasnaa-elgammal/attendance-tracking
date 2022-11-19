@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Employee::class)->constrained()->onDelete('cascade');
             $table->date('date');
             $table->dateTime('check_in', $precision = 0);
-            $table->dateTime('check_out', $precision = 0);
+            $table->dateTime('check_out', $precision = 0)->nullable();
             $table->timestamps();
         });
     }

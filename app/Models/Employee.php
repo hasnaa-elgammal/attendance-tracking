@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\CheckInOut;
 use App\Models\Department;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
+use App\Models\LeavingRequest;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Employee extends Authenticatable
 {
@@ -25,6 +27,14 @@ class Employee extends Authenticatable
 
     public function department(){
         return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+
+    public function checkInOuts(){
+        return $this->hasMany(CheckInOut::class);
+    }
+
+    public function leavingRequests(){
+        return $this->hasMany(LeavingRequest::class);
     }
 
     public function isAdmin(){

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Employee::class)->constrained()->onDelete('cascade');
             $table->string('reason');
-            $table->enum('status',['pending','approved','not approved']);
+            $table->enum('status',['pending','approved','not approved'])->default('pending');
             $table->timestamps();
         });
     }
