@@ -35,13 +35,15 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         if(Auth::user()->isAdmin()){
+            $newImageName = $request->profile_img->extension();
+            $request->profile_img->move(public_path('images\profile_images'), $newImageName);
             $employee = Employee::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'department_id'=>$request->department_id,
                 'email' => $request->email,
                 'role'=>$request->role,
-                'profile_img'=>$request->profile_img,
+                'profile_img'=>$newImageName,
                 'verified'=>$request->verified,
                 'password' => Hash::make($request->password),
             ]);
@@ -78,6 +80,11 @@ class EmployeeController extends Controller
     {
         if(Auth::user()->isAdmin()){
             $employee=Employee::find($employee_Id);
+            $imageName = $employee->profile_img;
+            if($request->has('profile_img')){
+                $imageName =$request->profile_img->extension();
+                $request->profile_img->move(public_path('images\profile_images'), $imageName);
+            }
             if(is_null($employee)){
                 return response()->json('employee not Found', 404);
             }
@@ -87,7 +94,7 @@ class EmployeeController extends Controller
             $employee->department_id=$request->department_id;
             $employee->password = Hash::make($request->password);
             $employee->role =$request->role;
-            $employee->profile_img=$request->profile_img;
+            $employee->profile_img=$imageName;
             $employee->verified = $request->verified;
             if($employee->save()) {
                 return redirect()->route('Employees.index')->with('success','employee Has Been updated successfully');

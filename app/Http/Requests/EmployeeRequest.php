@@ -25,7 +25,7 @@ class EmployeeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules= [
             'first_name'=> ['required', 'min:2', 'max:25'],
             'last_name'=> ['required', 'min:2', 'max:25'],
             'email'=> ['required', 'min:2'],
@@ -33,6 +33,12 @@ class EmployeeRequest extends FormRequest
             'role'=> ['required'],
             'verified'=> ['required'],
             'department_id'=> ['required'],
+            'profile_img'=>'image',
+
         ];
+        if($this->isMethod('POST')){
+            $rules['profile_img'] = 'required|'. $rules['profile_img'];
+        }
+        return $rules;
     }
 }
