@@ -99,4 +99,14 @@ class LeavingRequestController extends Controller
             //redirect to home
         }
     }
+
+    public function allLeavingRequestsOfEmployee(){
+        if(Auth::user()->isAdmin()){
+            $leaving_requests = LeavingRequest::join('employees', 'employee_id', 'employees.id')
+            ->select('employees.id', 'first_name', 'last_name', 'email', 'profile_img', 'reason','status','leaving_time')->get();
+            //return view
+        }else{
+            //redirect to home
+        }
+    }
 }
