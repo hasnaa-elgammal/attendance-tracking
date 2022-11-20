@@ -88,4 +88,15 @@ class LeavingRequestController extends Controller
     {
         //
     }
+
+    public function allLeavingRequestsByDepartment($department_id){
+        if(Auth::user()->isAdmin() || (Auth::user()->isHead() && Auth::user()->department_id == $department_id)){
+            $leaving_requests = LeavingRequest::join('employees', 'employee_id', 'employees.id')
+            ->select('employees.id', 'first_name', 'last_name', 'email', 'profile_img', 'reason','status','leaving_time')
+            ->where('department_id', $department_id)->get();
+            //return view
+        }else{
+            //redirect to home
+        }
+    }
 }
