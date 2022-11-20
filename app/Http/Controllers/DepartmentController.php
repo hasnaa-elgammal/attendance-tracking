@@ -82,7 +82,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        if(Auth::user()->isAdmin()){
+        if(Auth::user()->isAdmin){
             $department->delete();
             //redirect to departments
         }
