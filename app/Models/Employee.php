@@ -21,7 +21,8 @@ class Employee extends Authenticatable
         'password',
         'role',
         'verified',
-        'department_id'
+        'department_id',
+        'profile_img'
     ];
     public $timestamps = true;
 
